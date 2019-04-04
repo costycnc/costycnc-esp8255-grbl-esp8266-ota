@@ -50,7 +50,7 @@ long feedrate_micros = 0;
 //Read the string and execute instructions
 void process_string(String instruction, int size)
 {
-  Serial.print("acum sunt in process_string");
+ // Serial.print("acum sunt in process_string");
   int val;
 	//the character / means delete block... used for comments and stuff.
 	if (instruction[0] == '/')

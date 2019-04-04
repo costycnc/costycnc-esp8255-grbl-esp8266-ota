@@ -16,7 +16,7 @@ static const uint8_t D8   = 15;
 static const uint8_t D9   = 3;
 static const uint8_t D10  = 1;
 
-  char c;
+  //char c;
 
 #define COMMAND_SIZE 128
 char word1[COMMAND_SIZE];
@@ -156,6 +156,53 @@ readparam();
 
 void loop() {
    //dnsServer.processNextRequest();
+   
+//-----------------per serial -------------------------
+  char c;
+  
+  //keep it hot!
+ // extruder_manage_temperature();
+
+  //read in characters if we got them.
+  if (Serial.available() > 0)
+  {
+    c = Serial.read();
+    no_data = 0;
+    
+    //newlines are ends of commands.
+    if (c != '\r') //  adaugat de mine (c != '\r')
+    {
+      word1[serial_count] = c;
+      serial_count++;
+    }
+  }
+  //mark no data.
+  else
+  {
+    no_data++;
+    delayMicroseconds(100);
+  }
+
+  //if theres a pause or we got a real command, do it
+  if (serial_count && (c == '\n' || no_data > 100))
+  {
+    //process our command!
+     
+    process_string(word1, serial_count);
+
+    //clear command.
+    
+    init_process_string();
+     
+  }
+
+  //no data?  turn off steppers
+  if (no_data > 1000) disable_steppers();
+
+//-----------------per serial------------------------------
+
+
+   
   server.handleClient();
 }
 
