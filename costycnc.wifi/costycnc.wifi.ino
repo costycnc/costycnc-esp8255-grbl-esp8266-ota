@@ -76,7 +76,7 @@ password=LoadDataFromFile("password.txt");
 ESP.eraseConfig();
 WiFi.disconnect(true);
 WiFi.mode(WIFI_AP);
-WiFi.softAP("Costycnc");
+WiFi.softAP("Costycnc1");
   //Serial.printf("Try connecting to %s ", ssid1);
   WiFi.begin(ssid, password);
   int attempt=0;
@@ -138,6 +138,7 @@ readparam();
      server.on("/xminus",xminus);
      server.on("/yplus",yplus);
      server.on("/yminus",yminus);
+      server.on("/custom",custom);
 
  
 

@@ -5,11 +5,44 @@ char a[128]="COSTYCNC";
 
 
 
+
+
+
 int x=0;
 
 
 
 bool fileOpenFail;
+
+
+void custom() {
+String gcode="";
+String htmlcode="";
+char b;
+
+ File f = SPIFFS.open("/test.nc", "r");
+ while(f.available()) {
+
+      b=f.read();
+      gcode +=b;
+      }
+      f.close();
+      
+      f = SPIFFS.open("/gcode.html", "r");     
+      while(f.available()) {
+      b=f.read();
+      if(b=='$'){
+        htmlcode +=gcode;
+      }else{
+       htmlcode +=b;  
+      }
+      }
+      f.close();
+
+
+   server.send(200, "text/html", htmlcode);
+  
+}
 
 String LoadDataFromFile(String fileNameForSave)
 {
@@ -42,8 +75,9 @@ String text= "<!DOCTYPE html><html><head>";
   text +="<a href='/xminus'>X- </a>";
   text +="<a href='/yplus'>Y+ </a>";
   text +="<a href='/yminus'>Y- </a></h1></p>";
-  text +="<p><a href='index.html'>index</a></p></body></html>";
-   server.send(200, "text/html", text);
+  text +="<p><a href='index.html'>index</a></p>";
+  text +="</body></html>";
+  server.send(200, "text/html", text);
 }
 
 void xplus() {
