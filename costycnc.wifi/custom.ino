@@ -32,15 +32,33 @@ char b;
       while(f.available()) {
       b=f.read();
       if(b=='$'){
+         
         htmlcode +=gcode;
+         //server.send(200, "text/html", htmlcode);
       }else{
        htmlcode +=b;  
       }
       }
       f.close();
+      
+f = SPIFFS.open("costel.html", "w");
+  
+  if (!f) {
+    Serial.println("file open failed");
+  }
+  else
+  {
+      //Write data to file
+      Serial.println("Writing Data to File");
+      f.print(htmlcode);
+      f.close();  //Close file
+  }
+    f = SPIFFS.open("costel.html", "r");                    // Open the file
+    size_t sent = server.streamFile(f, "text/html");    // Send it to the client
+    f.close(); 
 
 
-   server.send(200, "text/html", htmlcode);
+   //server.send(200, "text/html", htmlcode);
   
 }
 
