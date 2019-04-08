@@ -4,7 +4,38 @@
 <title>Costycnc foam cutter cnc</title>
 </head>
 <body>
-<p><textarea rows="10" cols="22" id="gcode" >$
-</textarea>
+<p>Return to <a href="index.html">HOME</a>
+<p><textarea rows="10" cols="22" id="gcode" >
+$
+</textarea></p>
+<p><canvas id="myCanvas1" width="480" height="300" style="border:1px solid #FF0000;"></p>
+
+<script>
+
+var datafile= document.getElementById('gcode').value;
+
+var x=0;
+var y=0;
+
+var n=0;
+ var c = document.getElementById("myCanvas1");
+
+    var ctx = c.getContext("2d");
+	ctx.moveTo(0,0);
+
+while(n < datafile.length){
+n++;
+
+if(datafile[n]=="X")x=parseFloat(datafile.slice(n+1, n+10));
+if(datafile[n]=="Y")y=parseFloat(datafile.slice(n+1, n+10));
+if(datafile[n]=="\n")//sfarsit linie
+{
+	ctx.lineTo(x,y);
+//alert("x="+x+" y="+y);
+	ctx.stroke();
+}
+}
+
+</script>
 </body>
 </html>
