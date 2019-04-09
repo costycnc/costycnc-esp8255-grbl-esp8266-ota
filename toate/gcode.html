@@ -30,7 +30,7 @@ if(datafile[n]=="X")x=parseFloat(datafile.slice(n+1, n+10));
 if(datafile[n]=="Y")y=parseFloat(datafile.slice(n+1, n+10));
 if(datafile[n]=="\n")//sfarsit linie
 {
-	ctx.lineTo(x,y);
+	ctx.lineTo(x*2,y*2);
 //alert("x="+x+" y="+y);
 	ctx.stroke();
 }
