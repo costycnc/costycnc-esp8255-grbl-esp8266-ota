@@ -1,0 +1,16 @@
+https://www.esp8266.com/viewtopic.php?f=8&t=16830&start=4
+
+1. Create a new file in the Arduino IDE named index.h
+2. Put this inside it:
+CODE: SELECT ALL
+const char MAIN_page[] PROGMEM = R"=====(
+/// Your entire webpage here. (Can be multi-line)
+)=====";
+
+3. Make sure you save it, and import it in your main sketch file:
+CODE: SELECT ALL
+#import "index.h"
+
+4. Now to serve the web-page, simply do this:
+CODE: SELECT ALL
+httpServer.send(200, "text/html", MAIN_page);
