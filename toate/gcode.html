@@ -8,7 +8,7 @@
 <p><textarea rows="10" cols="22" id="gcode" >
 $
 </textarea></p>
-<p><canvas id="myCanvas1" width="480" height="300" style="border:1px solid #FF0000;"></p>
+<p><canvas id="myCanvas1" width="790" height="360" style="border:1px solid #FF0000;"></p>
 
 <script>
 
@@ -30,12 +30,24 @@ if(datafile[n]=="X")x=parseFloat(datafile.slice(n+1, n+10));
 if(datafile[n]=="Y")y=parseFloat(datafile.slice(n+1, n+10));
 if(datafile[n]=="\n")//sfarsit linie
 {
-	ctx.lineTo(x*2,y*2);
+	ctx.lineTo(x,y);
 //alert("x="+x+" y="+y);
 	ctx.stroke();
 }
 }
 
+var i;
+for (i = 0; i < 8; i++) { 
+ctx.moveTo(i*100,0);
+ctx.lineTo(i*100,400);
+}
+for (i = 0; i < 8; i++) { 
+ctx.moveTo(0,i*100);
+ctx.lineTo(800,i*100);
+}
+
+ctx.strokeStyle = "#FF0000";
+ctx.stroke();
 </script>
 </body>
 </html>
