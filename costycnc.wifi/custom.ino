@@ -63,7 +63,8 @@ int i=0;
      //Serial.println(htmlcode.substring(ind+1));
      
    server.sendContent(htmlcode.substring(ind+1));
-   //server.client().stop();
+   server.sendContent("");//zice ca asa clientu stie ca sa teminat stringu de transmis
+   server.client().stop();
 }
 
 
