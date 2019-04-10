@@ -20,7 +20,7 @@ String htmlcode="";
 char b;
 int ind;
 
- server.send(200, "text/html", "ok");
+ //server.send(200, "text/html", "ok"); //asta e pentru cand fac doar print
 
 
       
@@ -34,20 +34,22 @@ ind=htmlcode.indexOf("$");
 //https://www.arduino.cc/en/Tutorial/StringSubstring
   Serial.println(htmlcode.substring(0,ind));
 
-   //server.setContentLength(CONTENT_LENGTH_UNKNOWN);
-   //server.send(200, "text/html", htmlcode.substring(0,ind));
+   server.setContentLength(CONTENT_LENGTH_UNKNOWN);
+  server.send(200, "text/html", htmlcode.substring(0,ind));
  
 String gcode="";
-int i;
-
+int i=0;
+//nu am facut i=0 ... e i era troppo grande 1073685292 ... eu credeam ca initia cu 0 chiar daca nu fac egal cu 0
+//am pierdut 3 zile pentru asta
 
       f = SPIFFS.open("/test.nc", "r");
       while (f.available()){
       b = f.read();
       gcode += b;
-      if(i==20){
-        Serial.println(gcode);
-        Serial.println("bla bla la ");
+      //am pus i>2000 si modulo facea crash ... deci era mult de asteptat pana facea print la 2000 de caractere
+      if(i>1000){
+        //Serial.print(gcode);
+       server.sendContent(gcode);//trimite 1000 de caractere
         i=0;
         gcode="";
         yield();
@@ -55,11 +57,12 @@ int i;
       i++;
     }
       f.close();
-     Serial.println(gcode);
+     //Serial.println(gcode);
+     server.sendContent(gcode);//trimite ce a mai ramas
 
-     Serial.println(htmlcode.substring(ind+1));
+     //Serial.println(htmlcode.substring(ind+1));
      
-   //server.sendContent(htmlcode.substring(ind+1));
+   server.sendContent(htmlcode.substring(ind+1));
    //server.client().stop();
 }
 
