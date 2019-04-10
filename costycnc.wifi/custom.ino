@@ -16,51 +16,56 @@ bool fileOpenFail;
 
 
 void custom() {
-String gcode="";
 String htmlcode="";
 char b;
+int ind;
 
- File f = SPIFFS.open("/test.nc", "r");
- while(f.available()) {
+ server.send(200, "text/html", "ok");
 
-      b=f.read();
-      gcode +=b;
-      }
-      f.close();
+
       
-      f = SPIFFS.open("/gcode.html", "r");     
-      while(f.available()) {
-      b=f.read();
-      if(b=='$'){
-         
-        htmlcode +=gcode;
-         //server.send(200, "text/html", htmlcode);
-      }else{
-       htmlcode +=b;  
-      }
-      }
+      File f = SPIFFS.open("/gcode.html", "r");     
+      while (f.available()){
+      htmlcode += f.readString();
+    }
       f.close();
-      
-f = SPIFFS.open("costel.html", "w");
-  
-  if (!f) {
-    Serial.println("file open failed");
-  }
-  else
-  {
-      //Write data to file
-      Serial.println("Writing Data to File");
-      f.print(htmlcode);
-      f.close();  //Close file
-  }
-    f = SPIFFS.open("costel.html", "r");                    // Open the file
-    size_t sent = server.streamFile(f, "text/html");    // Send it to the client
-    f.close(); 
+
+ind=htmlcode.indexOf("$");
+//https://www.arduino.cc/en/Tutorial/StringSubstring
+  Serial.println(htmlcode.substring(0,ind));
+
+   //server.setContentLength(CONTENT_LENGTH_UNKNOWN);
+   //server.send(200, "text/html", htmlcode.substring(0,ind));
+ 
+String gcode="";
+int i;
 
 
-   //server.send(200, "text/html", htmlcode);
-  
+      f = SPIFFS.open("/test.nc", "r");
+      while (f.available()){
+      b = f.read();
+      gcode += b;
+      if(i==20){
+        Serial.println(gcode);
+        Serial.println("bla bla la ");
+        i=0;
+        gcode="";
+        yield();
+      }
+      i++;
+    }
+      f.close();
+     Serial.println(gcode);
+
+     Serial.println(htmlcode.substring(ind+1));
+     
+   //server.sendContent(htmlcode.substring(ind+1));
+   //server.client().stop();
 }
+
+
+
+
 
 String LoadDataFromFile(String fileNameForSave)
 {
