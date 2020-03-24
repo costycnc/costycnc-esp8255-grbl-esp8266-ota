@@ -5,6 +5,8 @@ esp8266 grbl only serial https://www.thingiverse.com/thing:2974763
 
 gcode interpreter simple https://github.com/MarginallyClever/GcodeCNCDemo
 
+flasher https://github.com/nodemcu/nodemcu-flasher
+
 
 Interacting with Grbl's Systems
 Along with streaming a G-code program, there a few more things to consider when writing a GUI for Grbl, such as how to use status reporting, real-time control commands, dealing with EEPROM, and general message handling.
