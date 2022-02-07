@@ -1,5 +1,5 @@
 /*
-  <form action="http://192.168.4.1/upload"method="post" enctype="multipart/form-data">
+  <form action="http://192.168.4.1/upload1"method="post" enctype="multipart/form-data">
     <input type="file" name="name">
     <input class="button" type="submit" value="Upload">
 </form>
@@ -99,12 +99,12 @@ readparam();
 
   server.begin();
   Serial.println("TCP server started");
-  server.on("/upload", HTTP_GET, []() {                 // if the client requests the upload page
+  server.on("/upload1", HTTP_GET, []() {                 // if the client requests the upload page
     if (!handleFileRead("/upload.html"))                // send it if it exists
       server.send(404, "text/plain", "404: Not Found"); // otherwise, respond with a 404 (Not Found) error
   });
 
-  server.on("/upload", HTTP_POST,                       // if the client posts to the upload page
+  server.on("/upload1", HTTP_POST,                       // if the client posts to the upload page
     [](){ server.send(200); },                          // Send status 200 (OK) to tell the client we are ready to receive
     handleFileUpload                                    // Receive and save the file
   );
