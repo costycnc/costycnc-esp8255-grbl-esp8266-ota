@@ -2,6 +2,8 @@
 
 esp8266-ota update webserver with http://192.168.4.1/update
 
+i change upload to upload1 in upload.html because conflict with upload firmware
+
 after load code to esp8266 ... with file toate/upload.html upload all files from folder toate
 
 continuare da https://github.com/costycnc/costycnc-esp8285-esp8266-gcode-interpreter
